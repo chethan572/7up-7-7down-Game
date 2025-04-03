@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7up 7 & 7Down</title>
+    <style>
+        body{
+            background-color: rgb(65, 66, 66);
+            text-align: center;
+            color: aliceblue;
+
+            background:url(https://cdn.pixabay.com/photo/2018/03/09/14/44/model-3211631_1280.jpg);
+        }
+        .con1{
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+           
+        }
+        .card1,.card2,.card3{
+            height: 160px;
+            width: 150px;
+            background-color:black;
+            color: azure;
+            box-shadow: 3px 3px 10px white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input{
+            width: 300px;
+            height: 40px;
+            border-radius: 5px;
+            border: white;
+            margin-top: 30px;
+        }
+        input:focus{
+            outline: none;
+        }
+        button{
+            height: 50px;
+            width: 100px;
+            margin-top: 30px;
+            background-color: rgb(5, 176, 68);
+            color: azure;
+            border-radius: 5px;
+        
+        }
+        button:active{
+            background-color: rgb(242, 109, 88);
+        }
+        ::placeholder{
+            text-align: center;
+        }
+        @media screen and (max-width:480px) {
+           
+            .card1,.card2,.card3{
+            height: 80px;
+            width: 90px;
+            margin-top: 30px;
+            }
+            input{
+            width: 200px;
+            height: 30px;
+            margin-top: 30px;
+            }
+            button{
+            height: 40px;
+            width: 80px;
+            margin-top: 30px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: aliceblue;text-shadow: 5px 3px 10px black;">7UP 7 & 7DOWN GAME</h1>
+        <div class="con1">
+            <div class="card1">
+                <h2>7up <br> 2x</h2>
+                
+            </div>
+            <div class="card2">
+                <h2>7 <br>3x</h2>
+            </div>
+            <div class="card3">
+                <h2>7Down <br>2x</h2>
+            </div>
+        </div>
+        <br><br>
+        <div class="img">
+        <img src="" alt="" class="img1" width="70" height="70">
+            <img src="" alt="" class="img2" width="70" height="70">
+        </div>
+            <input  type="text" id="input" placeholder=" Enter Your BET Amount" required ><br>
+            <button onclick="rollon()">Stop the Dice</button>
+        
+            <h3></h3>
+            <h3></h3>
+    </div>
+    <script>
+        let choice = ""
+        let balance = 0
+        let diceValue = [1,2,3,4,5,6,]
+        
+
+        function win(){
+            let win = new Audio('win.mp3')
+            win.play()
+        }
+        function lose(){
+            let lose = new Audio('lose.mp3')
+            lose.play()
+        }
+        document.querySelectorAll('img')[0].setAttribute('src','dice-game.gif')
+        document.querySelectorAll('img')[1].setAttribute('src','dice-game.gif')
+         
+        document.getElementsByClassName('card1')[0].addEventListener('click',displayCard1)
+        function displayCard1(){
+            choice = "7up"
+            document.getElementsByClassName('card2')[0].style.display = "none"
+            document.getElementsByClassName('card3')[0].style.display = "none"
+        }
+        document.getElementsByClassName('card2')[0].addEventListener('click',displayCard2)
+        function displayCard2(){
+            choice = "7"
+            document.getElementsByClassName('card1')[0].style.display = "none"
+            document.getElementsByClassName('card3')[0].style.display = "none"
+        }
+        document.getElementsByClassName('card3')[0].addEventListener('click',displayCard3)
+        function displayCard3(){
+            choice = "7Down"
+            document.getElementsByClassName('card1')[0].style.display = "none"
+            document.getElementsByClassName('card2')[0].style.display = "none"
+        }
+        function rollon(){
+           
+            
+            if(!choice )
+        {
+             alert ("Please select a choice")
+             return;
+        }
+            let bet = Number(document.getElementById('input').value)
+            if(!bet){
+                alert ("Please Enter valid bet Amt")
+                return;
+            
+            }
+            
+
+            let dice1 = Math.floor(Math.random()*6)+1
+            let dice2 = Math.floor(Math.random()*6)+1
+
+            document.querySelectorAll("img")[0].setAttribute('src',`D-${dice1}.webp`)
+            document.querySelectorAll("img")[1].setAttribute('src',`D-${dice2}.webp`)
+             if((dice1 + dice2) >7 && choice=='7up'){
+                win()
+                document.querySelectorAll("h3")[0].innerHTML =`Your choice is ${choice} and dice value is ${dice1+dice2} won 2x${2*bet}`
+                document.querySelectorAll("h3")[1].innerHTML = `Net Balance = Rs.${balance =balance + (2*bet)}`
+
+                document.getElementsByClassName("card2")[0].style.display ='flex'
+                document.getElementsByClassName("card3")[0].style.display ='flex'
+            }
+            else if((dice1 + dice2 ) == 7 && choice=='7'){
+                win()
+                document.querySelectorAll("h3")[0].innerHTML =`Your choice is ${choice} and dice value is ${dice1 + dice2} won 3x${3*bet}`
+                document.querySelectorAll("h3")[1].innerHTML = `Net Balance = Rs.${balance =balance + (3*bet)}`
+
+                document.getElementsByClassName("card1")[0].style.display ='flex'
+                document.getElementsByClassName("card3")[0].style.display ='flex'
+            }
+            else if((dice1 + dice2) < 7 && choice=='7Down'){
+                win()
+                document.querySelectorAll("h3")[0].innerHTML =`Your choice is ${choice} and dice value is ${dice1+ dice2} won 2x${2*bet}`
+                document.querySelectorAll("h3")[1].innerHTML = `Net Balance = Rs.${balance =balance + (2*bet)}`
+
+                document.getElementsByClassName("card1")[0].style.display ='flex'
+                document.getElementsByClassName("card2")[0].style.display ='flex'
+            }
+            else{
+                lose()
+                document.querySelectorAll("h3")[0].innerHTML =`Your choice is ${choice} and dice value is ${dice1+ dice2} lost ${0*bet}`
+                document.querySelectorAll("h3")[1].innerHTML = `Net Balance = Rs.${balance =balance - bet}`
+
+                document.getElementsByClassName("card1")[0].style.display ='flex'
+                document.getElementsByClassName("card2")[0].style.display ='flex'
+                document.getElementsByClassName("card3")[0].style.display ='flex'
+            }
+
+
+        } 
+
+    </script>
+</body>
+</html>
