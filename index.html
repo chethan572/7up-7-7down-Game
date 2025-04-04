@@ -104,16 +104,62 @@
         let choice = ""
         let balance = 0
         let diceValue = [1,2,3,4,5,6,]
+        let wwebp;
+        let lwebp;
+        
+        function Creategif(){
+                        
+            
+            wwebp = document.createElement('img');
+            wwebp.src = 'happy.webp'; 
+            wwebp.style.width = "300px"; 
+            wwebp.style.height = "auto";
+            wwebp.style.position = " absolute";
+            wwebp.style.top = " 50%";
+            wwebp.style.left = " 10%";
+            wwebp.style.display = "none"
+            document.body.appendChild( wwebp);
+
+            lwebp = document.createElement('img');
+            lwebp .src = 'dudu.webp'; 
+            lwebp .style.width = "300px"; 
+            lwebp .style.height = "auto";
+            lwebp .style.position = " absolute";
+            lwebp.style.top = " 50%";
+            lwebp .style.right = " 10%";
+            lwebp.style.display = "none"
+            document.body.appendChild(lwebp );
+           
+        }
         
 
-        function win(){
-            let win = new Audio('win.mp3')
-            win.play()
-        }
+        function win() {
+            
+            let win = new Audio('win.mp3');
+             win.play();
+
+             if(lwebp){
+                lwebp.style.display = "none"
+             }
+
+             if( wwebp){
+                wwebp.style.display = "block"
+            }
+    }
         function lose(){
             let lose = new Audio('lose.mp3')
-            lose.play()
+            lose.play();
+
+            if( wwebp){
+                wwebp.style.display = "none"
+            }
+            if(lwebp){
+                lwebp.style.display = "block"
+             }
+
+            
         }
+        Creategif();
         document.querySelectorAll('img')[0].setAttribute('src','dice-game.gif')
         document.querySelectorAll('img')[1].setAttribute('src','dice-game.gif')
          
@@ -136,7 +182,7 @@
             document.getElementsByClassName('card2')[0].style.display = "none"
         }
         function rollon(){
-           
+            
             
             if(!choice )
         {
@@ -179,6 +225,7 @@
 
                 document.getElementsByClassName("card1")[0].style.display ='flex'
                 document.getElementsByClassName("card2")[0].style.display ='flex'
+                
             }
             else{
                 lose()
@@ -188,10 +235,12 @@
                 document.getElementsByClassName("card1")[0].style.display ='flex'
                 document.getElementsByClassName("card2")[0].style.display ='flex'
                 document.getElementsByClassName("card3")[0].style.display ='flex'
+                
+
             }
-
-
-        } 
+           
+        }
+       
 
     </script>
 </body>
